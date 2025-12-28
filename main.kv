@@ -1,0 +1,81 @@
+<Container>:
+    orientation: 'vertical'
+    canvas.before:
+        Color:
+            rgba: 0.95, 0.96, 0.98, 1
+        Rectangle:
+            pos: self.pos
+            size: self.size
+
+    # Верхняя панель - ИСПРАВЛЕНА
+    BoxLayout:
+        pos_hint: {'top': 1}
+        orientation: 'horizontal'
+        padding: [dp(20), 0, 0, 0]  # Адаптивные отступы
+        size_hint: 1, 0.1
+        canvas.before:
+            Color:
+                rgba: 0.27, 0.35, 0.46, 1
+            Rectangle:
+                pos: self.pos
+                size: self.size
+
+        Button:
+            size_hint: None, None
+            size: dp(60), dp(60)  # Адаптивный размер
+            background_normal: ''
+            background_color: 0, 0, 0, 0
+            pos_hint: {'center_y': 0.5}
+            on_release: root.show_subjects(root.ids.list_subjects)
+            Image:
+                source: 'images/Hamburger_icon.svg.png'
+                size: self.parent.size
+                center: self.parent.center
+
+        Label:
+            text: 'Расписание'
+            font_size: sp(42)  # Адаптивный размер шрифта
+            text_size: self.size
+            valign: 'middle'
+            padding: [dp(80), 0, 0, 0]
+
+    # Основная область с расписанием
+    ScrollView:
+        id: schedule_main
+        size_hint: 1, 0.9
+        pos_hint: {'top': 0.9}
+        do_scroll_x: False
+        do_scroll_y: True
+
+        BoxLayout:
+            id: schedule_container
+            orientation: 'vertical'
+            size_hint_y: None
+            height: self.minimum_height
+            padding: dp(10)  # Адаптивные отступы
+            spacing: dp(10)  # Адаптивный spacing
+
+    # Боковое меню - ИСПРАВЛЕНО
+    FloatLayout:
+        id: list_subjects
+        size_hint: None, None
+        size: dp(280), root.height * 0.7  # Фиксированная ширина в dp
+        pos: -self.width, root.height * 0.15
+        canvas.before:
+            Color:
+                rgba: 1, 1, 1, 1
+            Rectangle:
+                pos: self.pos
+                size: self.size
+
+        ScrollView:
+            size_hint: 1, 1
+            pos: self.parent.pos
+
+            BoxLayout:
+                id: buttons_container
+                size_hint_y: None
+                height: self.minimum_height
+                orientation: 'vertical'
+                padding: dp(10)  # Адаптивные отступы
+                spacing: dp(8)  # Адаптивный spacing
